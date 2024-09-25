@@ -1,5 +1,7 @@
 <script setup>
 import { toggleTheme } from '~/services/themeService';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faWifi } from '@fortawesome/free-solid-svg-icons';
 
 const toggleNabarBody = $event => {
   const navbarBurgerEl = $event.currentTarget;
@@ -12,6 +14,7 @@ const toggleNabarBody = $event => {
 </script>
 
 <template>
+  <FontAwesomeIcon :icon="faWifi" />
   <nav class="level is-mobile py-2">
     <div class="level-left">
       <div class="level-item">World Clock</div>
