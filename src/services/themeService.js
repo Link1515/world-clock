@@ -1,6 +1,11 @@
+const THEME = {
+  LIGHT: 'light',
+  DARK: 'dark'
+};
+
 const getPrefersColorScheme = () => {
   const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  return isDark ? 'dark' : 'light';
+  return isDark ? THEME.DARK : THEME.LIGHT;
 };
 
 const setThemeToLocalStorage = theme => {
@@ -22,7 +27,7 @@ export const initTheme = () => {
 
 export const toggleTheme = () => {
   let theme = getThemeFromLocalStorage() || getPrefersColorScheme();
-  theme = theme === 'light' ? 'dark' : 'light';
+  theme = theme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT;
 
   setThemeToLocalStorage(theme);
   applyTheme(theme);
