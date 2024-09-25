@@ -2,13 +2,13 @@
 import { onMounted } from 'vue';
 import { initTheme, toggleTheme } from '~/services/themeService';
 
-let htmlEl = null;
+import Header from './components/Header.vue';
 
 onMounted(initTheme);
 </script>
 
 <template>
-  <div class="container">
-    <button class="button" @click="toggleTheme">Toggle Theme</button>
+  <div class="container px-4">
+    <Header />
   </div>
 </template>
