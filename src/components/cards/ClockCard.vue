@@ -6,12 +6,16 @@ const props = defineProps({
   timezone: {
     type: String,
     required: true
+  },
+  hourDisplay: {
+    type: String,
+    required: true
   }
 });
 
-const time = ref(getCurrentTime(props.timezone));
+const time = ref(getCurrentTime(props.timezone, props.hourDisplay));
 const intervalTimer = setInterval(() => {
-  time.value = getCurrentTime(props.timezone);
+  time.value = getCurrentTime(props.timezone, props.hourDisplay);
 }, 1000);
 
 onUnmounted(() => clearInterval(intervalTimer));
