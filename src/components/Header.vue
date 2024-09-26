@@ -3,7 +3,10 @@ import { ref, nextTick } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { toggleTheme, getTheme, THEME } from '~/services/themeService';
-import { setHourDisplay, toggleHourDisplayStr } from '~/services/timeService';
+import {
+  setHourDisplayToLocalStorage,
+  toggleHourDisplayStr
+} from '~/services/timeService';
 
 const theme = ref(getTheme());
 const toggleThemeAndFlag = () => {
@@ -15,7 +18,7 @@ const hourDisplay = defineModel('hourDisplay');
 const toggleHourDisplay = async () => {
   hourDisplay.value = toggleHourDisplayStr(hourDisplay.value);
   await nextTick();
-  setHourDisplay(hourDisplay.value);
+  setHourDisplayToLocalStorage(hourDisplay.value);
 };
 </script>
 

@@ -25,7 +25,7 @@ export const getCurrentTime = (
 export const getHourDisplay = () =>
   window.localStorage.getItem('hourDisplayType') || HOUR_DISPLAY.HOUR_24;
 
-export const setHourDisplay = hourDisplay => {
+export const setHourDisplayToLocalStorage = hourDisplay => {
   window.localStorage.setItem('hourDisplayType', hourDisplay);
 };
 
