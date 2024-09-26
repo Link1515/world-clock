@@ -1,5 +1,5 @@
 <script setup>
-import { ref, nextTick } from 'vue';
+import { ref, inject } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { toggleTheme, getTheme, THEME } from '~/services/themeService';
@@ -14,10 +14,9 @@ const toggleThemeAndFlag = () => {
   theme.value = getTheme();
 };
 
-const hourDisplay = defineModel('hourDisplay');
-const toggleHourDisplay = async () => {
+const hourDisplay = inject('hourDisplay');
+const toggleHourDisplay = () => {
   hourDisplay.value = toggleHourDisplayStr(hourDisplay.value);
-  await nextTick();
   setHourDisplayToLocalStorage(hourDisplay.value);
 };
 </script>
