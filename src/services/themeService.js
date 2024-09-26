@@ -1,4 +1,4 @@
-const THEME = {
+export const THEME = {
   LIGHT: 'light',
   DARK: 'dark'
 };
@@ -14,6 +14,9 @@ const setThemeToLocalStorage = theme => {
 
 const getThemeFromLocalStorage = () => window.localStorage.getItem('theme');
 
+export const getTheme = () =>
+  getThemeFromLocalStorage() || getPrefersColorScheme();
+
 const applyTheme = theme => {
   const htmlEl = document.querySelector('html');
   htmlEl.dataset.theme = theme;
@@ -26,7 +29,7 @@ export const initTheme = () => {
 };
 
 export const toggleTheme = () => {
-  let theme = getThemeFromLocalStorage() || getPrefersColorScheme();
+  let theme = getTheme();
   theme = theme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT;
 
   setThemeToLocalStorage(theme);

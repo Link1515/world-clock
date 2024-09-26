@@ -1,20 +1,20 @@
 <script setup>
-import { toggleTheme } from '~/services/themeService';
+import { ref, onMounted } from 'vue';
+import { toggleTheme, getTheme, THEME } from '~/services/themeService';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faWifi } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
-const toggleNabarBody = $event => {
-  const navbarBurgerEl = $event.currentTarget;
-  const target = navbarBurgerEl.dataset.target;
-  const navbarBodyEl = document.getElementById(target);
+const theme = ref();
 
-  navbarBurgerEl.classList.toggle('is-active');
-  navbarBodyEl.classList.toggle('is-active');
+onMounted(() => (theme.value = getTheme()));
+
+const onClickToggleThemeBtn = () => {
+  toggleTheme();
+  theme.value = getTheme();
 };
 </script>
 
 <template>
-  <FontAwesomeIcon :icon="faWifi" />
   <nav class="level is-mobile py-2">
     <div class="level-left">
       <div class="level-item">World Clock</div>
@@ -22,8 +22,18 @@ const toggleNabarBody = $event => {
 
     <div class="level-right">
       <div class="level-item">
-        <button class="button" @click="toggleTheme">Toggle Theme</button>
+        <button class="toggleThemeBtn button" @click="onClickToggleThemeBtn">
+          <FontAwesomeIcon v-show="theme === THEME.LIGHT" :icon="faSun" />
+          <FontAwesomeIcon v-show="theme === THEME.DARK" :icon="faMoon" />
+        </button>
       </div>
     </div>
   </nav>
 </template>
+
+<style>
+.toggleThemeBtn {
+  width: 40px;
+  height: 40px;
+}
+</style>
