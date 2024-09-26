@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { initTheme } from '~/services/themeService';
 import { getUserTimezone, getHourDisplay } from '~/services/timeService';
+import { getClocksFromTimezones } from '~/services/clockService';
 
 import Header from '~/components/Header.vue';
 import ClockCard from '~/components/cards/ClockCard.vue';
@@ -10,13 +11,22 @@ import CreateClockCard from '~/components/cards/CreateClockCard.vue';
 initTheme();
 
 const hourDisplay = ref(getHourDisplay());
-const userTimezone = getUserTimezone();
+watch(hourDisplay, () => {
+  clocks.value = getClocksFromTimezones(timezones, hourDisplay.value);
+});
 
-const timezones = ref([]);
-timezones.value.push(userTimezone);
+const userTimezone = getUserTimezone();
+const timezones = [];
+timezones.push(userTimezone);
+
+const clocks = ref(getClocksFromTimezones(timezones, hourDisplay.value));
+setInterval(() => {
+  clocks.value = getClocksFromTimezones(timezones, hourDisplay.value);
+}, 1000);
 
 const addClock = timezone => {
-  timezones.value.push(timezone);
+  timezones.push(timezone);
+  clocks.value = getClocksFromTimezones(timezones, hourDisplay.value);
 };
 </script>
 
@@ -27,8 +37,8 @@ const addClock = timezone => {
       class="fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop"
     >
       <div class="grid">
-        <div class="cell" v-for="timezone in timezones">
-          <ClockCard :timezone="timezone" :hourDisplay="hourDisplay" />
+        <div class="cell" v-for="clock in clocks">
+          <ClockCard :time="clock.time" :timezone="clock.timezone" />
         </div>
         <div class="cell">
           <CreateClockCard @add-clock="addClock" />

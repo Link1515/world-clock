@@ -1,31 +1,21 @@
 <script setup>
-import { ref, onUnmounted } from 'vue';
-import { getCurrentTime } from '~/services/timeService';
-
 const props = defineProps({
-  timezone: {
+  time: {
     type: String,
     required: true
   },
-  hourDisplay: {
+  timezone: {
     type: String,
     required: true
   }
 });
-
-const time = ref(getCurrentTime(props.timezone, props.hourDisplay));
-const intervalTimer = setInterval(() => {
-  time.value = getCurrentTime(props.timezone, props.hourDisplay);
-}, 1000);
-
-onUnmounted(() => clearInterval(intervalTimer));
 </script>
 
 <template>
   <div class="card">
     <div class="card-content">
       <div class="content">
-        <p class="title has-text-centered mb-2">{{ time }}</p>
+        <p class="title has-text-centered mb-2">{{ props.time }}</p>
         <div class="subtitle has-text-centered">
           {{ props.timezone }}
         </div>
