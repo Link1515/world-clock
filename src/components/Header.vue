@@ -31,7 +31,7 @@ const toggleHourDisplay = () => {
       </div>
     </div>
 
-    <div class="level-right">
+    <div class="level-right is-flex-direction-row">
       <div class="level-item">
         <button class="button" @click="toggleHourDisplay">
           {{ hourDisplay }}
