@@ -22,7 +22,11 @@ const toggleHourDisplay = async () => {
 <template>
   <nav class="level is-mobile py-2">
     <div class="level-left">
-      <div class="level-item">World Clock</div>
+      <div class="level-item">
+        <h1 class="has-text-link has-text-weight-bold is-size-5">
+          World Clock
+        </h1>
+      </div>
     </div>
 
     <div class="level-right">

@@ -14,10 +14,14 @@ const userTimezone = getUserTimezone();
 
 const timezones = ref([]);
 timezones.value.push(userTimezone);
+
+const addClock = timezone => {
+  timezones.value.push(timezone);
+};
 </script>
 
 <template>
-  <div class="container px-4">
+  <div class="appContainer container px-4">
     <Header v-model:hourDisplay="hourDisplay" />
     <div
       class="fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop"
@@ -26,10 +30,16 @@ timezones.value.push(userTimezone);
         <div class="cell" v-for="timezone in timezones">
           <ClockCard :timezone="timezone" :hourDisplay="hourDisplay" />
         </div>
-        <button class="cell">
-          <CreateClockCard />
-        </button>
+        <div class="cell">
+          <CreateClockCard @add-clock="addClock" />
+        </div>
       </div>
     </div>
   </div>
 </template>
+
+<style>
+.appContainer {
+  min-height: 100dvh;
+}
+</style>

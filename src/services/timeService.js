@@ -8,6 +8,8 @@ export const HOUR_DISPLAY = {
 export const getUserTimezone = () =>
   Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+export const getAvailableTimezones = () => Intl.supportedValuesOf('timeZone');
+
 export const getCurrentTime = (
   timezone,
   hourDisplay = HOUR_DISPLAY.HOUR_24
@@ -16,7 +18,7 @@ export const getCurrentTime = (
     timezone = getUserTimezone();
   }
   const format =
-    hourDisplay === HOUR_DISPLAY.HOUR_24 ? 'HH:mm:ss' : 'hh:mm:ss a';
+    hourDisplay === HOUR_DISPLAY.HOUR_24 ? 'HH:mm:ss' : 'h:mm:ss a';
   return DateTime.now().setZone(timezone).toFormat(format);
 };
 
