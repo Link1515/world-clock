@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted } from 'vue';
-import { initTheme, toggleTheme } from '~/services/themeService';
+import { initTheme } from '~/services/themeService';
 
-import Header from './components/Header.vue';
+import Header from '~/components/Header.vue';
 
 onMounted(initTheme);
 </script>
