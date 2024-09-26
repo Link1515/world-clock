@@ -23,3 +23,9 @@ const props = defineProps({
     </div>
   </div>
 </template>
+
+<style scoped>
+.card-content {
+  min-height: 150px;
+}
+</style>

@@ -71,6 +71,7 @@ const addClock = () => {
 .card-content {
   display: grid;
   place-items: center;
+  min-height: 150px;
 }
 
 .modal-content {
