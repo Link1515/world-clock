@@ -5,22 +5,31 @@ export const HOUR_DISPLAY = {
   HOUR_24: '24'
 };
 
+/**
+ * ========
+ * timezone
+ * ========
+ * */
+
 export const getUserTimezone = () =>
   Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export const getAvailableTimezones = () => Intl.supportedValuesOf('timeZone');
 
-export const getCurrentTime = (
-  timezone,
-  hourDisplay = HOUR_DISPLAY.HOUR_24
-) => {
-  if (!timezone) {
-    timezone = getUserTimezone();
-  }
-  const format =
-    hourDisplay === HOUR_DISPLAY.HOUR_24 ? 'HH:mm:ss' : 'h:mm:ss a';
-  return DateTime.now().setZone(timezone).toFormat(format);
+export const getTimezones = () => {
+  const timezones = window.localStorage.getItem('timezones');
+  return timezones ? JSON.parse(timezones) : [getUserTimezone()];
 };
+
+export const setTimezonesToLocalStorage = timezones => {
+  window.localStorage.setItem('timezones', JSON.stringify(timezones));
+};
+
+/**
+ * ============
+ * hour display
+ * ============
+ */
 
 export const getHourDisplay = () =>
   window.localStorage.getItem('hourDisplayType') || HOUR_DISPLAY.HOUR_24;
@@ -33,3 +42,21 @@ export const toggleHourDisplayStr = hourDisplay =>
   hourDisplay === HOUR_DISPLAY.HOUR_12
     ? HOUR_DISPLAY.HOUR_24
     : HOUR_DISPLAY.HOUR_12;
+
+/**
+ * ====
+ * Time
+ * ====
+ */
+
+export const getCurrentTime = (
+  timezone,
+  hourDisplay = HOUR_DISPLAY.HOUR_24
+) => {
+  if (!timezone) {
+    timezone = getUserTimezone();
+  }
+  const format =
+    hourDisplay === HOUR_DISPLAY.HOUR_24 ? 'HH:mm:ss' : 'h:mm:ss a';
+  return DateTime.now().setZone(timezone).toFormat(format);
+};

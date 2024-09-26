@@ -1,7 +1,11 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { initTheme } from '~/services/themeService';
-import { getUserTimezone, getHourDisplay } from '~/services/timeService';
+import {
+  getTimezones,
+  setTimezonesToLocalStorage,
+  getHourDisplay
+} from '~/services/timeService';
 import { getClocksFromTimezones } from '~/services/clockService';
 
 import Header from '~/components/Header.vue';
@@ -11,22 +15,19 @@ import CreateClockCard from '~/components/cards/CreateClockCard.vue';
 initTheme();
 
 const hourDisplay = ref(getHourDisplay());
-watch(hourDisplay, () => {
-  clocks.value = getClocksFromTimezones(timezones, hourDisplay.value);
-});
-
-const userTimezone = getUserTimezone();
-const timezones = [];
-timezones.push(userTimezone);
-
+const timezones = getTimezones();
 const clocks = ref(getClocksFromTimezones(timezones, hourDisplay.value));
-setInterval(() => {
+
+const updateClocks = () => {
   clocks.value = getClocksFromTimezones(timezones, hourDisplay.value);
-}, 1000);
+};
+setInterval(updateClocks, 1000);
+watch(hourDisplay, updateClocks);
 
 const addClock = timezone => {
   timezones.push(timezone);
-  clocks.value = getClocksFromTimezones(timezones, hourDisplay.value);
+  setTimezonesToLocalStorage(timezones);
+  updateClocks();
 };
 </script>
 
