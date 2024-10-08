@@ -24,6 +24,15 @@ const addClock = timezone => {
   setTimezonesToLocalStorage(timezones);
   updateClocks();
 };
+
+const removeClock = timezone => {
+  const removeIndex = timezones.indexOf(timezone);
+  if (removeIndex < 0) return;
+
+  timezones.splice(removeIndex, 1);
+  setTimezonesToLocalStorage(timezones);
+  updateClocks();
+};
 </script>
 
 <template>
@@ -32,7 +41,11 @@ const addClock = timezone => {
   >
     <div class="grid">
       <div class="cell" v-for="clock in clocks">
-        <ClockCard :time="clock.time" :timezone="clock.timezone" />
+        <ClockCard
+          :time="clock.time"
+          :timezone="clock.timezone"
+          @remove-clock="removeClock"
+        />
       </div>
       <div class="cell">
         <CreateClockCard @add-clock="addClock" />
@@ -40,3 +53,9 @@ const addClock = timezone => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.grid {
+  gap: 1.5rem;
+}
+</style>
