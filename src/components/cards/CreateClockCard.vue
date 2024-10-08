@@ -3,18 +3,12 @@ import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { getAvailableTimezones } from '~/services/timeService';
+import { useModal } from '~/composables/useModal';
 
 const emit = defineEmits(['addClock']);
 
 const modal = ref();
-
-const openModal = () => {
-  modal.value.classList.add('is-active');
-};
-
-const closeModel = () => {
-  modal.value.classList.remove('is-active');
-};
+const { openModal, closeModal } = useModal(modal);
 
 const timezones = getAvailableTimezones();
 const selectedTimezone = ref(timezones[0]);
@@ -22,7 +16,7 @@ const selectedTimezone = ref(timezones[0]);
 const addClock = () => {
   if (!selectedTimezone.value) return;
   emit('addClock', selectedTimezone.value);
-  closeModel();
+  closeModal();
 };
 </script>
 
@@ -38,7 +32,7 @@ const addClock = () => {
   </button>
 
   <div ref="modal" class="modal">
-    <div class="modal-background" @click="closeModel"></div>
+    <div class="modal-background" @click="closeModal"></div>
     <div class="modal-content px-4">
       <div class="box">
         <h3 class="is-size-4 mb-2">Select a timezone</h3>
@@ -54,7 +48,7 @@ const addClock = () => {
         </div>
       </div>
     </div>
-    <button class="modal-close is-large" @click="closeModel"></button>
+    <button class="modal-close is-large" @click="closeModal"></button>
   </div>
 </template>
 
