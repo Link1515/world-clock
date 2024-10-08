@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useModal } from '~/composables/useModal';
+import Modal from '~/components/Modal.vue';
 
 const props = defineProps({
   time: {
@@ -17,8 +17,15 @@ const props = defineProps({
 
 const emit = defineEmits(['removeClock']);
 
-const modal = ref();
-const { openModal, closeModal } = useModal(modal);
+const modalIsOpen = ref(false);
+const openModal = () => {
+  modalIsOpen.value = true;
+};
+
+const onClickRemove = () => {
+  modalIsOpen.value = false;
+  emit('removeClock', props.timezone);
+};
 </script>
 
 <template>
@@ -36,23 +43,14 @@ const { openModal, closeModal } = useModal(modal);
     </div>
   </div>
 
-  <div ref="modal" class="modal">
-    <div class="modal-background" @click="closeModal"></div>
-    <div class="modal-content px-4">
-      <div class="box">
-        <h3 class="is-size-4 mb-5">Remove {{ props.timezone }}?</h3>
-        <div class="has-text-centered">
-          <button
-            class="button is-danger has-text-light"
-            @click="emit('removeClock', props.timezone)"
-          >
-            Remove
-          </button>
-        </div>
-      </div>
+  <Modal v-model="modalIsOpen">
+    <h3 class="is-size-4 mb-5">Remove {{ props.timezone }}?</h3>
+    <div class="has-text-centered">
+      <button class="button is-danger has-text-light" @click="onClickRemove">
+        Remove
+      </button>
     </div>
-    <button class="modal-close is-large" @click="closeModal"></button>
-  </div>
+  </Modal>
 </template>
 
 <style scoped>
@@ -71,9 +69,5 @@ const { openModal, closeModal } = useModal(modal);
   position: absolute;
   top: 0.5rem;
   right: 1rem;
-}
-
-.modal-content {
-  max-width: 450px;
 }
 </style>

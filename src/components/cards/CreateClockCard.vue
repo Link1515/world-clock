@@ -3,12 +3,14 @@ import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { getAvailableTimezones } from '~/services/timeService';
-import { useModal } from '~/composables/useModal';
+import Modal from '~/components/Modal.vue';
 
 const emit = defineEmits(['addClock']);
 
-const modal = ref();
-const { openModal, closeModal } = useModal(modal);
+const modalIsOpen = ref(false);
+const openModal = () => {
+  modalIsOpen.value = true;
+};
 
 const timezones = getAvailableTimezones();
 const selectedTimezone = ref(timezones[0]);
@@ -16,7 +18,7 @@ const selectedTimezone = ref(timezones[0]);
 const addClock = () => {
   if (!selectedTimezone.value) return;
   emit('addClock', selectedTimezone.value);
-  closeModal();
+  modalIsOpen.value = false;
 };
 </script>
 
@@ -31,25 +33,19 @@ const addClock = () => {
     </div>
   </button>
 
-  <div ref="modal" class="modal">
-    <div class="modal-background" @click="closeModal"></div>
-    <div class="modal-content px-4">
-      <div class="box">
-        <h3 class="is-size-4 mb-2">Select a timezone</h3>
-        <div class="select mb-5">
-          <select v-model="selectedTimezone">
-            <option v-for="timezone in timezones" :value="timezone">
-              {{ timezone }}
-            </option>
-          </select>
-        </div>
-        <div class="has-text-centered">
-          <button class="button is-link" @click="addClock">Add</button>
-        </div>
-      </div>
+  <Modal v-model="modalIsOpen">
+    <h3 class="is-size-4 mb-2">Select a timezone</h3>
+    <div class="select mb-5">
+      <select v-model="selectedTimezone">
+        <option v-for="timezone in timezones" :value="timezone">
+          {{ timezone }}
+        </option>
+      </select>
     </div>
-    <button class="modal-close is-large" @click="closeModal"></button>
-  </div>
+    <div class="has-text-centered">
+      <button class="button is-link" @click="addClock">Add</button>
+    </div>
+  </Modal>
 </template>
 
 <style scoped>
@@ -66,10 +62,6 @@ const addClock = () => {
   display: grid;
   place-items: center;
   min-height: 150px;
-}
-
-.modal-content {
-  max-width: 450px;
 }
 
 .select,
