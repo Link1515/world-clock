@@ -23,14 +23,8 @@ const addClock = () => {
 </script>
 
 <template>
-  <button @click="openModal" class="create-clock-btn">
-    <div class="card">
-      <div class="card-content">
-        <div class="content flex has-text-link">
-          <FontAwesomeIcon :icon="faSquarePlus" size="2x" />
-        </div>
-      </div>
-    </div>
+  <button @click="openModal" class="create-clock-btn has-text-link">
+    <FontAwesomeIcon :icon="faSquarePlus" size="2x" />
   </button>
 
   <Modal v-model="modalIsOpen">
@@ -50,8 +44,11 @@ const addClock = () => {
 
 <style scoped>
 .create-clock-btn {
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  right: 1rem;
+  bottom: 3rem;
+  width: 32px;
+  height: 32px;
 }
 
 .card,

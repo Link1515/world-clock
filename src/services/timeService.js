@@ -25,6 +25,11 @@ export const setTimezonesToLocalStorage = timezones => {
   window.localStorage.setItem('timezones', JSON.stringify(timezones));
 };
 
+export const updateTimezonesLocalStorageByClocks = clocks => {
+  const timezones = clocks.map(clock => clock.timezone);
+  setTimezonesToLocalStorage(timezones);
+};
+
 /**
  * ============
  * hour display
