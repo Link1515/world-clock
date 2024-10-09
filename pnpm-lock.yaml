@@ -32,6 +32,9 @@ importers:
       vue:
         specifier: ^3.4.37
         version: 3.5.8
+      vue-draggable-plus:
+        specifier: ^0.5.3
+        version: 0.5.3(@types/sortablejs@1.15.8)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.1.2
@@ -309,6 +312,9 @@ packages:
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
+  '@types/sortablejs@1.15.8':
+    resolution: {integrity: sha512-b79830lW+RZfwaztgs1aVPgbasJ8e7AXtZYHTELNXZPsERt4ymJdjV4OccDbHQAvHrCcFpbF78jkm0R6h/pZVg==}
+
   '@vitejs/plugin-vue@5.1.4':
     resolution: {integrity: sha512-N2XSI2n3sQqp5w7Y/AN/L2XDjBIRGqXko+eDp42sydYSBeJuSm5a1sLf8zakmo8u7tA8NmBgoDLA1HeOESjp9A==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -429,6 +435,15 @@ packages:
       sugarss:
         optional: true
       terser:
+        optional: true
+
+  vue-draggable-plus@0.5.3:
+    resolution: {integrity: sha512-dwKDzZ8io3y7k2iuIwVwiGrdiq5C0S7Et7nt5Gz5KjpBS9MtZGFP+L4FJPWGSLYleOT8HmVuCXTZYjGet7wC0g==}
+    peerDependencies:
+      '@types/sortablejs': ^1.15.0
+      '@vue/composition-api': '*'
+    peerDependenciesMeta:
+      '@vue/composition-api':
         optional: true
 
   vue@3.5.8:
@@ -599,6 +614,8 @@ snapshots:
 
   '@types/estree@1.0.5': {}
 
+  '@types/sortablejs@1.15.8': {}
+
   '@vitejs/plugin-vue@5.1.4(vite@5.4.8)(vue@3.5.8)':
     dependencies:
       vite: 5.4.8
@@ -744,6 +761,10 @@ snapshots:
       rollup: 4.22.4
     optionalDependencies:
       fsevents: 2.3.3
+
+  vue-draggable-plus@0.5.3(@types/sortablejs@1.15.8):
+    dependencies:
+      '@types/sortablejs': 1.15.8
 
   vue@3.5.8:
     dependencies:
