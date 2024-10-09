@@ -60,7 +60,10 @@ const onClickRemove = () => {
 
 .card-content {
   position: relative;
+  padding-left: 36px;
+  padding-right: 36px;
   min-height: 150px;
+  user-select: none;
 }
 
 .remove-btn {

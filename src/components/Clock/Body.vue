@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch, inject } from 'vue';
 import { vDraggable } from 'vue-draggable-plus';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import {
   getTimezones,
   updateTimezonesLocalStorageByClocks
@@ -38,23 +40,23 @@ const removeClock = timezone => {
 const onDragEnd = () => {
   updateTimezonesLocalStorageByClocks(clocks.value);
 };
+
+const vueDraggableConfig = {
+  animation: 150,
+  handle: '.drag-handler',
+  onEnd: onDragEnd
+};
 </script>
 
 <template>
   <div
     class="fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop"
   >
-    <div
-      class="grid"
-      v-draggable="[
-        clocks,
-        {
-          animation: 150,
-          onEnd: onDragEnd
-        }
-      ]"
-    >
-      <div class="cell" v-for="clock in clocks">
+    <div class="grid" v-draggable="[clocks, vueDraggableConfig]">
+      <div class="cell" v-for="clock in clocks" style="position: relative">
+        <button class="drag-handler">
+          <FontAwesomeIcon :icon="faBars" />
+        </button>
         <ClockCard
           :time="clock.time"
           :timezone="clock.timezone"
@@ -70,5 +72,25 @@ const onDragEnd = () => {
 <style scoped>
 .grid {
   gap: 1.5rem;
+}
+
+.drag-handler {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  z-index: 10;
+  left: 2px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+  font-size: 1.25rem;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+}
+
+.drag-handler:active {
+  cursor: grabbing;
 }
 </style>
