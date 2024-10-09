@@ -66,11 +66,7 @@ const toggleEditingStatus = () => (isEditing.value = !isEditing.value);
 }
 
 .button.active {
-  background-color: hsl(
-    var(--bulma-link-h),
-    var(--bulma-link-s),
-    var(--bulma-link-l)
-  );
-  color: #f3f4f6;
+  background-color: var(--bulma-link);
+  color: var(--bulma-light);
 }
 </style>
