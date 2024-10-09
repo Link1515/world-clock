@@ -4,7 +4,7 @@ import { initTheme } from '~/services/themeService';
 import { getHourDisplay } from '~/services/timeService';
 
 import Header from '~/components/Header.vue';
-import ClockBody from '~/components/ClockBody.vue';
+import ClockBody from '~/components/Clock/Body.vue';
 
 initTheme();
 

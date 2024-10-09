@@ -8,8 +8,8 @@ import {
 } from '~/services/timeService';
 import { getClocksFromTimezones } from '~/services/clockService';
 
-import ClockCard from '~/components/cards/ClockCard.vue';
-import CreateClockBtn from '~/components/CreateClockBtn.vue';
+import ClockCard from '~/components/Clock/Card.vue';
+import ClockCreateBtn from '~/components/Clock/CreateBtn.vue';
 
 const hourDisplay = inject('hourDisplay');
 const timezones = getTimezones();
@@ -72,7 +72,7 @@ const onDragEnd = () => {
       </div>
     </div>
 
-    <CreateClockBtn @add-clock="addClock" />
+    <ClockCreateBtn @add-clock="addClock" />
   </div>
 </template>
 
