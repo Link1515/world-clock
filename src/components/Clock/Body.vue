@@ -6,7 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import {
   getTimezones,
   updateTimezonesLocalStorageByClocks
-} from '~/services/timeService';
+} from '~/services/timezoneService';
 import {
   getClocksFromTimezones,
   addClockByTimezone,

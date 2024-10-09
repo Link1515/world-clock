@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import { getAvailableTimezones } from '~/services/timeService';
+import { getAvailableTimezones } from '~/services/timezoneService';
 import Modal from '~/components/Modal.vue';
 
 const emit = defineEmits(['addClock']);
