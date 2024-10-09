@@ -41,12 +41,20 @@ const onClickRemove = () => {
   <Transition name="bounce">
     <div class="card" v-if="showCard">
       <div class="card-content">
-        <button class="drag-handler" v-show="isEditing">
-          <FontAwesomeIcon :icon="faBars" />
-        </button>
-        <button v-show="props.isEditing" class="remove-btn" @click="openModal">
-          <FontAwesomeIcon :icon="faXmark" />
-        </button>
+        <Transition name="bounce">
+          <button class="drag-handler" v-show="isEditing">
+            <FontAwesomeIcon :icon="faBars" />
+          </button>
+        </Transition>
+        <Transition name="bounce">
+          <button
+            v-show="props.isEditing"
+            class="remove-btn"
+            @click="openModal"
+          >
+            <FontAwesomeIcon :icon="faXmark" />
+          </button>
+        </Transition>
         <div class="content">
           <p class="title has-text-centered mb-2">{{ props.time }}</p>
           <div class="subtitle has-text-centered">
@@ -99,6 +107,7 @@ const onClickRemove = () => {
   margin: auto;
   text-align: center;
   font-size: 1.25rem;
+  color: var(--bulma-link);
   display: grid;
   place-items: center;
   cursor: grab;
