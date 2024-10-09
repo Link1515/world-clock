@@ -6,7 +6,7 @@ import { toggleTheme, getTheme, THEME } from '~/services/themeService';
 import {
   setHourDisplayToLocalStorage,
   toggleHourDisplay
-} from '~/services/timeService';
+} from '~/services/hourDisplayService';
 
 const theme = ref(getTheme());
 const toggleThemeStatus = () => {

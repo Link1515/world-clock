@@ -1,7 +1,7 @@
 <script setup>
 import { ref, provide } from 'vue';
 import { initTheme } from '~/services/themeService';
-import { getHourDisplay } from '~/services/timeService';
+import { getHourDisplay } from '~/services/hourDisplayService';
 
 import Header from '~/components/Header.vue';
 import ClockBody from '~/components/Clock/Body.vue';
