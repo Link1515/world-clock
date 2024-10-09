@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, inject } from 'vue';
+import { ref, watch, inject, nextTick } from 'vue';
 import { vDraggable } from 'vue-draggable-plus';
 import {
   getTimezones,
@@ -11,6 +11,7 @@ import {
   removeClockByTimezone,
   updateClocks
 } from '~/services/clockService';
+import { scrollToBottom } from '~/utils';
 
 import ClockCard from '~/components/Clock/Card.vue';
 import ClockCreateBtn from '~/components/Clock/CreateBtn.vue';
@@ -24,8 +25,12 @@ const refreshClocks = () => updateClocks(clocks.value, hourDisplay.value);
 watch(hourDisplay, refreshClocks);
 setInterval(refreshClocks, 1000);
 
-const addClock = timezone => {
+const addClock = async timezone => {
   addClockByTimezone(clocks.value, timezone, hourDisplay.value);
+
+  await nextTick();
+  scrollToBottom();
+
   updateTimezonesLocalStorageByClocks(clocks.value);
   refreshClocks();
 };
