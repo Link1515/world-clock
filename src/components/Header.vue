@@ -5,18 +5,18 @@ import { faSun, faMoon, faGear } from '@fortawesome/free-solid-svg-icons';
 import { toggleTheme, getTheme, THEME } from '~/services/themeService';
 import {
   setHourDisplayToLocalStorage,
-  toggleHourDisplayStr
+  toggleHourDisplay
 } from '~/services/timeService';
 
 const theme = ref(getTheme());
-const toggleThemeAndFlag = () => {
+const toggleThemeStatus = () => {
   toggleTheme();
   theme.value = getTheme();
 };
 
 const hourDisplay = inject('hourDisplay');
-const toggleHourDisplay = () => {
-  hourDisplay.value = toggleHourDisplayStr(hourDisplay.value);
+const toggleHourDisplayStatus = () => {
+  hourDisplay.value = toggleHourDisplay(hourDisplay.value);
   setHourDisplayToLocalStorage(hourDisplay.value);
 };
 
@@ -45,12 +45,12 @@ const toggleEditingStatus = () => (isEditing.value = !isEditing.value);
         </button>
       </div>
       <div class="level-item">
-        <button class="button" @click="toggleHourDisplay">
+        <button class="button" @click="toggleHourDisplayStatus">
           {{ hourDisplay }}
         </button>
       </div>
       <div class="level-item">
-        <button class="button" @click="toggleThemeAndFlag">
+        <button class="button" @click="toggleThemeStatus">
           <FontAwesomeIcon v-show="theme === THEME.LIGHT" :icon="faSun" />
           <FontAwesomeIcon v-show="theme === THEME.DARK" :icon="faMoon" />
         </button>
