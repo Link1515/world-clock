@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faBars } from '@fortawesome/free-solid-svg-icons';
 import Modal from '~/components/Modal.vue';
 
 const props = defineProps({
@@ -21,6 +21,11 @@ const props = defineProps({
 
 const emit = defineEmits(['removeClock']);
 
+const showCard = ref(false);
+onMounted(() => {
+  showCard.value = true;
+});
+
 const modalIsOpen = ref(false);
 const openModal = () => {
   modalIsOpen.value = true;
@@ -33,19 +38,24 @@ const onClickRemove = () => {
 </script>
 
 <template>
-  <div class="card">
-    <div class="card-content">
-      <button v-show="props.isEditing" class="remove-btn" @click="openModal">
-        <FontAwesomeIcon :icon="faXmark" />
-      </button>
-      <div class="content">
-        <p class="title has-text-centered mb-2">{{ props.time }}</p>
-        <div class="subtitle has-text-centered">
-          {{ props.timezone }}
+  <Transition name="bounce">
+    <div class="card" v-if="showCard">
+      <div class="card-content">
+        <button class="drag-handler" v-show="isEditing">
+          <FontAwesomeIcon :icon="faBars" />
+        </button>
+        <button v-show="props.isEditing" class="remove-btn" @click="openModal">
+          <FontAwesomeIcon :icon="faXmark" />
+        </button>
+        <div class="content">
+          <p class="title has-text-centered mb-2">{{ props.time }}</p>
+          <div class="subtitle has-text-centered">
+            {{ props.timezone }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </Transition>
 
   <Modal v-model="modalIsOpen">
     <h3 class="is-size-4 mb-5">Remove {{ props.timezone }}?</h3>
@@ -76,5 +86,25 @@ const onClickRemove = () => {
   position: absolute;
   top: 0.5rem;
   right: 1rem;
+}
+
+.drag-handler {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  z-index: 10;
+  left: 2px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+  font-size: 1.25rem;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+}
+
+.drag-handler:active {
+  cursor: grabbing;
 }
 </style>
