@@ -3,10 +3,14 @@ import { ref, watch, inject } from 'vue';
 import { vDraggable } from 'vue-draggable-plus';
 import {
   getTimezones,
-  getCurrentTime,
   updateTimezonesLocalStorageByClocks
 } from '~/services/timeService';
-import { getClocksFromTimezones } from '~/services/clockService';
+import {
+  getClocksFromTimezones,
+  addClockByTimezone,
+  removeClockByTimezone,
+  updateClocks
+} from '~/services/clockService';
 
 import ClockCard from '~/components/Clock/Card.vue';
 import ClockCreateBtn from '~/components/Clock/CreateBtn.vue';
@@ -15,33 +19,20 @@ const hourDisplay = inject('hourDisplay');
 const timezones = getTimezones();
 const clocks = ref(getClocksFromTimezones(timezones, hourDisplay.value));
 
-const updateClocks = () => {
-  clocks.value.forEach(clock => {
-    clock.time = getCurrentTime(clock.timezone, hourDisplay.value);
-  });
-};
-watch(hourDisplay, updateClocks);
-setInterval(updateClocks, 1000);
+const refreshClocks = () => updateClocks(clocks.value, hourDisplay.value);
+watch(hourDisplay, refreshClocks);
+setInterval(refreshClocks, 1000);
 
 const addClock = timezone => {
-  clocks.value.push({
-    timezone,
-    time: ''
-  });
-
+  addClockByTimezone(clocks.value, timezone, hourDisplay.value);
   updateTimezonesLocalStorageByClocks(clocks.value);
-  updateClocks();
+  refreshClocks();
 };
 
 const removeClock = timezone => {
-  const removeIndex = clocks.value.findIndex(
-    clock => clock.timezone === timezone
-  );
-  if (removeIndex < 0) return;
-  clocks.value.splice(removeIndex, 1);
-
+  removeClockByTimezone(clocks.value, timezone);
   updateTimezonesLocalStorageByClocks(clocks.value);
-  updateClocks();
+  refreshClocks();
 };
 
 const onDragEnd = () => {
