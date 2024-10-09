@@ -9,7 +9,7 @@ const openModal = () => {
 };
 
 const closeModal = () => {
-  modal.value.classList.remove('is-active');
+  setTimeout(() => modal.value.classList.remove('is-active'), 300);
 };
 
 watch(isOpen, () => {
@@ -18,15 +18,17 @@ watch(isOpen, () => {
 </script>
 
 <template>
-  <div ref="modal" class="modal">
-    <div class="modal-background" @click="isOpen = false"></div>
-    <div class="modal-content px-4">
-      <div class="box">
-        <slot />
+  <Transition name="fade">
+    <div ref="modal" class="modal" v-show="isOpen">
+      <div class="modal-background" @click="isOpen = false"></div>
+      <div class="modal-content px-4">
+        <div class="box">
+          <slot />
+        </div>
       </div>
+      <button class="modal-close is-large" @click="isOpen = false"></button>
     </div>
-    <button class="modal-close is-large" @click="isOpen = false"></button>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>
