@@ -17,6 +17,7 @@ import {
 import ClockCard from '~/components/Clock/Card.vue';
 import ClockCreateBtn from '~/components/Clock/CreateBtn.vue';
 
+const isEditing = inject('isEditing');
 const hourDisplay = inject('hourDisplay');
 const timezones = getTimezones();
 const clocks = ref(getClocksFromTimezones(timezones, hourDisplay.value));
@@ -54,12 +55,13 @@ const vueDraggableConfig = {
   >
     <div class="grid" v-draggable="[clocks, vueDraggableConfig]">
       <div class="cell" v-for="clock in clocks" style="position: relative">
-        <button class="drag-handler">
+        <button class="drag-handler" v-show="isEditing">
           <FontAwesomeIcon :icon="faBars" />
         </button>
         <ClockCard
           :time="clock.time"
           :timezone="clock.timezone"
+          :is-editing="isEditing"
           @remove-clock="removeClock"
         />
       </div>
@@ -92,5 +94,15 @@ const vueDraggableConfig = {
 
 .drag-handler:active {
   cursor: grabbing;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

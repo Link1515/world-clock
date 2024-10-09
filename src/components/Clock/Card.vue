@@ -12,6 +12,10 @@ const props = defineProps({
   timezone: {
     type: String,
     required: true
+  },
+  isEditing: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -31,7 +35,7 @@ const onClickRemove = () => {
 <template>
   <div class="card">
     <div class="card-content">
-      <button class="remove-btn" @click="openModal">
+      <button v-show="props.isEditing" class="remove-btn" @click="openModal">
         <FontAwesomeIcon :icon="faXmark" />
       </button>
       <div class="content">

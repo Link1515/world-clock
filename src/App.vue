@@ -10,6 +10,9 @@ initTheme();
 
 const hourDisplay = ref(getHourDisplay());
 provide('hourDisplay', hourDisplay);
+
+const isEditing = ref(false);
+provide('isEditing', isEditing);
 </script>
 
 <template>

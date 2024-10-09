@@ -1,7 +1,7 @@
 <script setup>
 import { ref, inject } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon, faGear } from '@fortawesome/free-solid-svg-icons';
 import { toggleTheme, getTheme, THEME } from '~/services/themeService';
 import {
   setHourDisplayToLocalStorage,
@@ -19,6 +19,9 @@ const toggleHourDisplay = () => {
   hourDisplay.value = toggleHourDisplayStr(hourDisplay.value);
   setHourDisplayToLocalStorage(hourDisplay.value);
 };
+
+const isEditing = inject('isEditing');
+const toggleEditingStatus = () => (isEditing.value = !isEditing.value);
 </script>
 
 <template>
@@ -32,6 +35,15 @@ const toggleHourDisplay = () => {
     </div>
 
     <div class="level-right is-flex-direction-row">
+      <div class="level-item">
+        <button
+          class="button"
+          :class="{ active: isEditing }"
+          @click="toggleEditingStatus"
+        >
+          <FontAwesomeIcon :icon="faGear" />
+        </button>
+      </div>
       <div class="level-item">
         <button class="button" @click="toggleHourDisplay">
           {{ hourDisplay }}
@@ -51,5 +63,14 @@ const toggleHourDisplay = () => {
 .button {
   width: 40px;
   height: 40px;
+}
+
+.button.active {
+  background-color: hsl(
+    var(--bulma-link-h),
+    var(--bulma-link-s),
+    var(--bulma-link-l)
+  );
+  color: #f3f4f6;
 }
 </style>
