@@ -12,6 +12,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "bulma": "^1.0.2",
+    "fuse.js": "^7.0.0",
+    "lodash": "^4.17.21",
     "luxon": "^3.5.0",
     "vue": "^3.4.37",
     "vue-draggable-plus": "^0.5.3"
