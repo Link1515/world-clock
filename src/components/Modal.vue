@@ -33,6 +33,9 @@ watch(isOpen, () => {
 
 <style scoped>
 .modal-content {
+  height: 100%;
   max-width: 450px;
+  display: flex;
+  align-items: center;
 }
 </style>

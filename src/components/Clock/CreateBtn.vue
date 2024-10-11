@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { getAvailableTimezones } from '~/services/timezoneService';
+
 import Modal from '~/components/Modal.vue';
+import TimezoneSearchInput from '~/components/TimezoneSearchInput.vue';
 
 const emit = defineEmits(['addClock']);
 
@@ -12,14 +14,19 @@ const openModal = () => {
   modalIsOpen.value = true;
 };
 
-const timezones = getAvailableTimezones();
-const selectedTimezone = ref(timezones[0]);
+const selectedTimezone = ref('');
 
 const addClock = () => {
   if (!selectedTimezone.value) return;
   emit('addClock', selectedTimezone.value);
   modalIsOpen.value = false;
+  selectedTimezone.value = '';
 };
+
+const timezones = getAvailableTimezones();
+const selectedTimezoneInvalid = computed(
+  () => !timezones.includes(selectedTimezone.value)
+);
 </script>
 
 <template>
@@ -28,16 +35,22 @@ const addClock = () => {
   </button>
 
   <Modal v-model="modalIsOpen">
-    <h3 class="is-size-4 mb-2">Select a timezone</h3>
-    <div class="select mb-5">
-      <select v-model="selectedTimezone">
-        <option v-for="timezone in timezones" :value="timezone">
-          {{ timezone }}
-        </option>
-      </select>
-    </div>
-    <div class="has-text-centered">
-      <button class="button is-link" @click="addClock">Add</button>
+    <div class="modal-wrapper">
+      <h3 class="is-size-4 mb-2">Select a timezone</h3>
+
+      <div class="mb-5">
+        <TimezoneSearchInput v-model="selectedTimezone" />
+      </div>
+
+      <div class="has-text-centered">
+        <button
+          class="button is-link"
+          @click="addClock"
+          :disabled="selectedTimezoneInvalid"
+        >
+          Add
+        </button>
+      </div>
     </div>
   </Modal>
 </template>
