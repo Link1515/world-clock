@@ -57,7 +57,7 @@ const vueDraggableConfig = {
     class="fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop"
   >
     <div class="grid" v-draggable="[clocks, vueDraggableConfig]">
-      <div class="cell" v-for="clock in clocks">
+      <div class="cell" v-for="clock in clocks" :key="clock.timezone">
         <ClockCard
           :time="clock.time"
           :timezone="clock.timezone"
