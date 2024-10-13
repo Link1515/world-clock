@@ -13,16 +13,16 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Install pnpm
+      - name: Install pnpm 🔧
         uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: true
 
-      - name: Build
+      - name: Build ⚙️
         run: pnpm build
 
-      - name: Deploy
+      - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
