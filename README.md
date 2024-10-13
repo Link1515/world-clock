@@ -1,3 +1,6 @@
-# TODO
+# World Clock
 
-- body overflow hidden when showing modal
+## Stack
+
+- Vue
+- Bulma
