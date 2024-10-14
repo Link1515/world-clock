@@ -6,10 +6,12 @@ const modal = ref();
 
 const openModal = () => {
   modal.value.classList.add('is-active');
+  document.body.style.overflow = 'hidden';
 };
 
 const closeModal = () => {
   setTimeout(() => modal.value.classList.remove('is-active'), 300);
+  document.body.style.overflow = '';
 };
 
 watch(isOpen, () => {

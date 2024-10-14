@@ -1,5 +1,10 @@
 @import 'bulma/css/bulma.min.css';
 
+body {
+  height: 100vh;
+  height: 100dvh;
+}
+
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
