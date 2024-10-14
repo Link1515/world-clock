@@ -90,10 +90,11 @@ const clickResult = result => {
   position: absolute;
   z-index: 10;
   top: 0;
-  right: 10px;
-  bottom: 0;
+  right: 6px;
   margin: auto;
-  text-align: center;
+  bottom: 0;
+  display: grid;
+  place-items: center;
 }
 
 .search-input {
