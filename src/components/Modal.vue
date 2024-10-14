@@ -34,10 +34,21 @@ watch(isOpen, () => {
 </template>
 
 <style scoped>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 50;
+}
+
 .modal-content {
   height: 100%;
   max-width: 450px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 </style>
