@@ -78,7 +78,7 @@ const onClickRemove = () => {
 <style scoped>
 .card {
   margin-bottom: 0;
-  min-height: 150px;
+  height: 150px;
 }
 
 .card-content {
@@ -86,6 +86,11 @@ const onClickRemove = () => {
   padding-left: 36px;
   padding-right: 36px;
   user-select: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .remove-btn {
