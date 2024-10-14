@@ -78,22 +78,25 @@ const onClickRemove = () => {
 <style scoped>
 .card {
   margin-bottom: 0;
+  min-height: 150px;
 }
 
 .card-content {
   position: relative;
   padding-left: 36px;
   padding-right: 36px;
-  min-height: 150px;
   user-select: none;
 }
 
 .remove-btn {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
+  font-size: 1.5rem;
   position: absolute;
-  top: 0.5rem;
+  top: 1rem;
   right: 1rem;
+  display: grid;
+  place-items: center;
 }
 
 .drag-handler {
@@ -106,7 +109,7 @@ const onClickRemove = () => {
   bottom: 0;
   margin: auto;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   color: var(--bulma-link);
   display: grid;
   place-items: center;
