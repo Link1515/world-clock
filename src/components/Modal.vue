@@ -21,10 +21,10 @@ watch(isOpen, () => {
 
 <template>
   <Transition name="fade">
-    <div ref="modal" class="modal" v-show="isOpen">
-      <div class="modal-background" @click="isOpen = false"></div>
+    <div ref="modal" class="modal" v-show="isOpen" @click="isOpen = false">
+      <div class="modal-background"></div>
       <div class="modal-content px-4">
-        <div class="box">
+        <div class="box" @click.stop>
           <slot />
         </div>
       </div>
