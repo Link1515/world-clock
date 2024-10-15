@@ -39,7 +39,10 @@ const selectedTimezoneInvalid = computed(
       <h3 class="is-size-4 mb-2">Select a timezone</h3>
 
       <div class="mb-5">
-        <TimezoneSearchInput v-model="selectedTimezone" />
+        <TimezoneSearchInput
+          v-model="selectedTimezone"
+          :is-show="modalIsOpen"
+        />
       </div>
 
       <div class="has-text-centered">

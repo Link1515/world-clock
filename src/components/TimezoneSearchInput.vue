@@ -1,10 +1,17 @@
 <script setup>
-import { ref, computed, watch, nextTick } from 'vue';
+import { ref, computed, watch, nextTick, onMounted } from 'vue';
 import Fuse from 'fuse.js';
 import debounce from 'lodash/debounce';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { getAvailableTimezones } from '~/services/timezoneService';
+
+const props = defineProps({
+  isShow: {
+    type: Boolean,
+    default: false
+  }
+});
 
 const timezones = getAvailableTimezones();
 
@@ -34,6 +41,16 @@ const noResultBoxIsShow = computed(
     searchInput.value !== ''
 );
 
+const inputEl = ref();
+watch(
+  () => props.isShow,
+  async () => {
+    if (!props.isShow) return;
+    await nextTick();
+    inputEl.value.focus();
+  }
+);
+
 const clickResult = result => {
   searchInput.value = result.item;
 };
@@ -45,6 +62,7 @@ const clickResult = result => {
       <FontAwesomeIcon :icon="faSearch" />
     </div>
     <input
+      ref="inputEl"
       v-model="searchInput"
       @focus="searchInputIsFocus = true"
       @blur="searchInputIsFocus = false"
