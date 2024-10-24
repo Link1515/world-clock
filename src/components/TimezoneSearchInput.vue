@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, nextTick, onMounted } from 'vue';
+import { ref, computed, watch, nextTick } from 'vue';
 import Fuse from 'fuse.js';
 import debounce from 'lodash/debounce';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

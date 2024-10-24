@@ -41,9 +41,7 @@ const removeClock = timezone => {
   refreshClocks();
 };
 
-const onDragEnd = () => {
-  updateTimezonesLocalStorageByClocks(clocks.value);
-};
+const onDragEnd = () => updateTimezonesLocalStorageByClocks(clocks.value);
 
 const vueDraggableConfig = {
   animation: 150,

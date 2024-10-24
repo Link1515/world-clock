@@ -8,9 +8,8 @@ const getPrefersColorScheme = () => {
   return isDark ? THEME.DARK : THEME.LIGHT;
 };
 
-const setThemeToLocalStorage = theme => {
+const setThemeToLocalStorage = theme =>
   window.localStorage.setItem('theme', theme);
-};
 
 const getThemeFromLocalStorage = () => window.localStorage.getItem('theme');
 

@@ -6,9 +6,8 @@ export const HOUR_DISPLAY = {
 export const getHourDisplay = () =>
   window.localStorage.getItem('hourDisplayType') || HOUR_DISPLAY.HOUR_24;
 
-export const setHourDisplayToLocalStorage = hourDisplay => {
+export const setHourDisplayToLocalStorage = hourDisplay =>
   window.localStorage.setItem('hourDisplayType', hourDisplay);
-};
 
 export const toggleHourDisplay = hourDisplay =>
   hourDisplay === HOUR_DISPLAY.HOUR_12

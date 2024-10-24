@@ -71,6 +71,7 @@ const selectedTimezoneInvalid = computed(
 .card-content {
   height: 100%;
 }
+
 .card-content {
   display: grid;
   place-items: center;

@@ -21,7 +21,9 @@ const toggleHourDisplayStatus = () => {
 };
 
 const isEditing = inject('isEditing');
-const toggleEditingStatus = () => (isEditing.value = !isEditing.value);
+const toggleEditingStatus = () => {
+  isEditing.value = !isEditing.value;
+};
 </script>
 
 <template>
