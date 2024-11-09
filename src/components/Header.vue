@@ -30,7 +30,7 @@ const toggleEditingStatus = () => {
   <nav class="level is-mobile py-2">
     <div class="level-left">
       <div class="level-item">
-        <h1 class="has-text-link has-text-weight-bold is-size-5">
+        <h1 class="logo has-text-link has-text-weight-bold is-size-5">
           World Clock
         </h1>
       </div>
@@ -62,6 +62,10 @@ const toggleEditingStatus = () => {
 </template>
 
 <style scoped>
+.logo {
+  user-select: none;
+}
+
 .button {
   width: 40px;
   height: 40px;
