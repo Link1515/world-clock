@@ -1,8 +1,8 @@
 # World Clock
 
-### [DEMO](https://link1515.github.io/world-clock/)
+### [Go to Website](https://link1515.github.io/world-clock/)
 
-## Stack
+## Stacks
 
 - Vue
 - Bulma
