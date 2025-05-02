@@ -20,8 +20,8 @@ describe('clockService', () => {
   beforeEach(() => {
     // 重置模擬
     vi.resetAllMocks()
-    // 模擬當前時間
-    const mockNow = DateTime.fromISO('2024-01-01T15:30:45')
+    // 模擬當前時間，使用 UTC 時區
+    const mockNow = DateTime.fromISO('2024-01-01T15:30:45Z')
     vi.spyOn(DateTime, 'now').mockReturnValue(mockNow)
   })
 
@@ -31,7 +31,7 @@ describe('clockService', () => {
     
     expect(clock).toEqual({
       timezone,
-      time: '15:30:45'
+      time: '23:30:45' // UTC+8
     })
   })
 
@@ -42,11 +42,11 @@ describe('clockService', () => {
     expect(clocks).toHaveLength(2)
     expect(clocks[0]).toEqual({
       timezone: 'Asia/Taipei',
-      time: '15:30:45'
+      time: '23:30:45' // UTC+8
     })
     expect(clocks[1]).toEqual({
       timezone: 'America/New_York',
-      time: '02:30:45'
+      time: '10:30:45' // UTC-5
     })
   })
 
@@ -59,15 +59,15 @@ describe('clockService', () => {
     expect(clocks).toHaveLength(1)
     expect(clocks[0]).toEqual({
       timezone,
-      time: '15:30:45'
+      time: '23:30:45' // UTC+8
     })
     expect(updateTimezonesLocalStorageByClocks).toHaveBeenCalledWith(clocks)
   })
 
   it('should remove a clock by timezone', () => {
     const clocks = [
-      { timezone: 'Asia/Taipei', time: '15:30:45' },
-      { timezone: 'America/New_York', time: '02:30:45' }
+      { timezone: 'Asia/Taipei', time: '23:30:45' }, // UTC+8
+      { timezone: 'America/New_York', time: '10:30:45' } // UTC-5
     ]
     
     removeClock(clocks, 'Asia/Taipei', HOUR_DISPLAY.HOUR_24)
@@ -79,8 +79,8 @@ describe('clockService', () => {
 
   it('should handle drag end by updating localStorage', () => {
     const clocks = [
-      { timezone: 'Asia/Taipei', time: '15:30:45' },
-      { timezone: 'America/New_York', time: '02:30:45' }
+      { timezone: 'Asia/Taipei', time: '23:30:45' }, // UTC+8
+      { timezone: 'America/New_York', time: '10:30:45' } // UTC-5
     ]
     
     handleDragEnd(clocks)
@@ -96,7 +96,7 @@ describe('clockService', () => {
     
     refreshClocks(clocks, HOUR_DISPLAY.HOUR_24)
     
-    expect(clocks[0].time).toBe('15:30:45')
-    expect(clocks[1].time).toBe('02:30:45')
+    expect(clocks[0].time).toBe('23:30:45') // UTC+8
+    expect(clocks[1].time).toBe('10:30:45') // UTC-5
   })
 }) 
