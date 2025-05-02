@@ -1,4 +1,4 @@
-const getUserTimezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
+export const getUserTimezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export const getAvailableTimezones = () => Intl.supportedValuesOf('timeZone');
 
