@@ -21,6 +21,15 @@ jobs:
           version: 8
           run_install: true
 
+      - name: Run tests 🧪
+        run: pnpm test
+
+      - name: Install Playwright Browsers 🔧
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run e2e tests 🧪
+        run: pnpm test:e2e
+
       - name: Build ⚙️
         run: pnpm build
 
