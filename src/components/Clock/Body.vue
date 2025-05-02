@@ -1,15 +1,13 @@
 <script setup>
 import { ref, watch, inject, nextTick } from 'vue';
 import { vDraggable } from 'vue-draggable-plus';
-import {
-  getTimezones,
-  updateTimezonesLocalStorageByClocks
-} from '~/services/timezoneService';
+import { getTimezones } from '~/services/timezoneService';
 import {
   getClocksFromTimezones,
-  addClockByTimezone,
-  removeClockByTimezone,
-  updateClocks
+  addClock,
+  removeClock,
+  refreshClocks,
+  handleDragEnd
 } from '~/services/clockService';
 import { scrollToBottom } from '~/utils';
 
@@ -21,27 +19,20 @@ const hourDisplay = inject('hourDisplay');
 const timezones = getTimezones();
 const clocks = ref(getClocksFromTimezones(timezones, hourDisplay.value));
 
-const refreshClocks = () => updateClocks(clocks.value, hourDisplay.value);
-watch(hourDisplay, refreshClocks);
-setInterval(refreshClocks, 1000);
+watch(hourDisplay, () => refreshClocks(clocks.value, hourDisplay.value));
+setInterval(() => refreshClocks(clocks.value, hourDisplay.value), 1000);
 
-const addClock = async timezone => {
-  addClockByTimezone(clocks.value, timezone, hourDisplay.value);
-
+const onAddClock = async timezone => {
+  addClock(clocks.value, timezone, hourDisplay.value);
   await nextTick();
   scrollToBottom();
-
-  updateTimezonesLocalStorageByClocks(clocks.value);
-  refreshClocks();
 };
 
-const removeClock = timezone => {
-  removeClockByTimezone(clocks.value, timezone);
-  updateTimezonesLocalStorageByClocks(clocks.value);
-  refreshClocks();
+const onRemoveClock = timezone => {
+  removeClock(clocks.value, timezone, hourDisplay.value);
 };
 
-const onDragEnd = () => updateTimezonesLocalStorageByClocks(clocks.value);
+const onDragEnd = () => handleDragEnd(clocks.value);
 
 const vueDraggableConfig = {
   animation: 150,
@@ -60,12 +51,12 @@ const vueDraggableConfig = {
           :time="clock.time"
           :timezone="clock.timezone"
           :is-editing="isEditing"
-          @remove-clock="removeClock"
+          @remove-clock="onRemoveClock"
         />
       </div>
     </div>
 
-    <ClockCreateBtn @add-clock="addClock" />
+    <ClockCreateBtn @add-clock="onAddClock" />
   </div>
 </template>
 
