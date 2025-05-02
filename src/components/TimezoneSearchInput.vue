@@ -14,21 +14,55 @@ const props = defineProps({
 });
 
 const timezones = getAvailableTimezones();
+const searchCache = new Map();
 
-const fuse = new Fuse(timezones);
+const fuse = new Fuse(timezones, {
+  threshold: 0.3,
+  keys: ['item'],
+  includeScore: true
+});
 
 const searchInput = defineModel({ type: String, default: '' });
 const searchInputIsFocus = ref(false);
 const searchResult = ref([]);
 const resultBoxEl = ref();
+
 const handleSearch = async () => {
-  searchResult.value = fuse.search(searchInput.value);
+  const query = searchInput.value.trim();
+  
+  if (!query) {
+    searchResult.value = [];
+    return;
+  }
+
+  // Check cache first
+  if (searchCache.has(query)) {
+    searchResult.value = searchCache.get(query);
+    return;
+  }
+
+  // Perform search
+  const results = fuse.search(query);
+  
+  // Cache the results
+  searchCache.set(query, results);
+  
+  // Limit cache size to prevent memory issues
+  if (searchCache.size > 100) {
+    const firstKey = searchCache.keys().next().value;
+    searchCache.delete(firstKey);
+  }
+
+  searchResult.value = results;
+  
   await nextTick();
   if (resultBoxEl.value) {
     resultBoxEl.value.scrollTo(0, 0);
   }
 };
-watch(searchInput, debounce(handleSearch, 250, { leading: true }));
+
+// Debounce the search with a longer delay for better performance
+watch(searchInput, debounce(handleSearch, 300, { leading: true }));
 
 const searchResultBoxIsShow = computed(
   () => searchInputIsFocus.value && searchResult.value.length > 0
