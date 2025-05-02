@@ -18,13 +18,26 @@ export const getTheme = () =>
 
 const applyTheme = theme => {
   const htmlEl = document.querySelector('html');
+  
+  // Add transition class
+  htmlEl.classList.add('theme-transition');
+  
+  // Apply theme
   htmlEl.dataset.theme = theme;
+  
+  // Remove transition class after animation
+  setTimeout(() => {
+    htmlEl.classList.remove('theme-transition');
+  }, 300);
 };
 
 export const initTheme = () => {
   const savedTheme = getThemeFromLocalStorage();
   if (!savedTheme) return;
-  applyTheme(savedTheme);
+  
+  // Prevent transition on initial load
+  const htmlEl = document.querySelector('html');
+  htmlEl.dataset.theme = savedTheme;
 };
 
 export const toggleTheme = () => {
