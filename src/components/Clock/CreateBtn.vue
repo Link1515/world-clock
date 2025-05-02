@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import { getAvailableTimezones } from '~/services/timezoneService';
+import { getTimezones } from '~/services/timezoneService';
 
 import Modal from '~/components/Modal.vue';
 import TimezoneSearchInput from '~/components/TimezoneSearchInput.vue';
@@ -23,10 +23,9 @@ const addClock = () => {
   selectedTimezone.value = '';
 };
 
-const timezones = getAvailableTimezones();
-const selectedTimezoneInvalid = computed(
-  () => !timezones.includes(selectedTimezone.value)
-);
+const timezones = getTimezones();
+const selectedTimezoneEmpty = computed(() => !selectedTimezone.value);
+const selectedTimezoneExists = computed(() => timezones.includes(selectedTimezone.value));
 </script>
 
 <template>
@@ -37,6 +36,7 @@ const selectedTimezoneInvalid = computed(
   <Modal v-model="modalIsOpen">
     <div class="modal-wrapper">
       <h3 class="is-size-4 mb-2">Select a timezone</h3>
+      <p v-if="selectedTimezoneExists" class="has-text-danger mb-1">Timezone already exists</p>
 
       <div class="mb-5">
         <TimezoneSearchInput
@@ -49,7 +49,7 @@ const selectedTimezoneInvalid = computed(
         <button
           class="button is-link"
           @click="addClock"
-          :disabled="selectedTimezoneInvalid"
+          :disabled="selectedTimezoneEmpty || selectedTimezoneExists"
         >
           Add
         </button>
