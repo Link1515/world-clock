@@ -39,7 +39,7 @@ const toggleEditingStatus = () => {
     <div class="level-right is-flex-direction-row">
       <div class="level-item">
         <button
-          class="button"
+          class="setting-btn button"
           :class="{ active: isEditing }"
           @click="toggleEditingStatus"
         >
@@ -47,12 +47,12 @@ const toggleEditingStatus = () => {
         </button>
       </div>
       <div class="level-item">
-        <button class="button" @click="toggleHourDisplayStatus">
+        <button class="toggle-hour-display-btn button" @click="toggleHourDisplayStatus">
           {{ hourDisplay }}
         </button>
       </div>
       <div class="level-item">
-        <button class="button" @click="toggleThemeStatus">
+        <button class="toggle-theme-btn button" @click="toggleThemeStatus">
           <FontAwesomeIcon v-show="theme === THEME.LIGHT" :icon="faSun" />
           <FontAwesomeIcon v-show="theme === THEME.DARK" :icon="faMoon" />
         </button>
