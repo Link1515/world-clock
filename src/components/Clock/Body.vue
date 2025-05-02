@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, inject, nextTick } from 'vue';
+import { ref, watch, inject, nextTick, onMounted, onUnmounted } from 'vue';
 import { vDraggable } from 'vue-draggable-plus';
 import { getTimezones } from '~/services/timezoneService';
 import {
@@ -19,8 +19,57 @@ const hourDisplay = inject('hourDisplay');
 const timezones = getTimezones();
 const clocks = ref(getClocksFromTimezones(timezones, hourDisplay.value));
 
+let animationFrameId = null;
+let lastUpdateTime = 0;
+const UPDATE_INTERVAL = 1000; // 1 second
+
+const updateClocks = (timestamp) => {
+  if (!lastUpdateTime) {
+    lastUpdateTime = timestamp;
+  }
+
+  const elapsed = timestamp - lastUpdateTime;
+  if (elapsed >= UPDATE_INTERVAL) {
+    refreshClocks(clocks.value, hourDisplay.value);
+    lastUpdateTime = timestamp;
+  }
+
+  animationFrameId = requestAnimationFrame(updateClocks);
+};
+
+const startClockUpdates = () => {
+  if (!animationFrameId) {
+    animationFrameId = requestAnimationFrame(updateClocks);
+  }
+};
+
+const stopClockUpdates = () => {
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+};
+
+// Handle visibility change
+const handleVisibilityChange = () => {
+  if (document.hidden) {
+    stopClockUpdates();
+  } else {
+    startClockUpdates();
+  }
+};
+
+onMounted(() => {
+  startClockUpdates();
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+});
+
+onUnmounted(() => {
+  stopClockUpdates();
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+});
+
 watch(hourDisplay, () => refreshClocks(clocks.value, hourDisplay.value));
-setInterval(() => refreshClocks(clocks.value, hourDisplay.value), 1000);
 
 const onAddClock = async timezone => {
   addClock(clocks.value, timezone, hourDisplay.value);
