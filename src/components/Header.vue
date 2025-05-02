@@ -2,7 +2,8 @@
 import { ref, inject } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSun, faMoon, faGear } from '@fortawesome/free-solid-svg-icons';
-import { toggleTheme, getTheme, THEME } from '~/services/themeService';
+import { toggleTheme, getTheme } from '~/services/themeService';
+import { THEME } from '~/constants/theme';
 import {
   setHourDisplayToLocalStorage,
   toggleHourDisplay

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { DateTime } from 'luxon'
 import { getCurrentTime } from '~/services/timeService'
-import { HOUR_DISPLAY } from '~/services/hourDisplayService'
+import { HOUR_DISPLAY } from '~/constants/time'
 
 describe('timeService', () => {
   beforeEach(() => {

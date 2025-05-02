@@ -15,6 +15,15 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
     },
+    exclude: [
+      'node_modules',
+      'dist',
+      '.git',
+      '.cache',
+      'test-results',
+      'coverage',
+      'e2e',
+    ]
   },
   resolve: {
     alias: {

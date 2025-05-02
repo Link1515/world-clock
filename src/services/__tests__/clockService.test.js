@@ -9,7 +9,7 @@ import {
   refreshClocks
 } from '~/services/clockService'
 import { updateTimezonesLocalStorageByClocks } from '~/services/timezoneService'
-import { HOUR_DISPLAY } from '~/services/hourDisplayService'
+import { HOUR_DISPLAY } from '~/constants/time'
 
 // 模擬 timezoneService
 vi.mock('~/services/timezoneService', () => ({
